@@ -2,26 +2,18 @@
     <div>
       <h1>TodoList</h1>
       <div>
-        <Button type="primary" @click="createTodo">创建日程</Button>
+        <Button type="primary" @click="edit">创建日程</Button>
         <br>
         <br>
         <Table border :columns="columns" :data="datas">
-          <!-- <template slot-scope="{ row, index }" slot="time">
-              <strong>{{ row.time }}</strong>
-          </template> -->
           <template v-slot:time='{row}'>
               <strong>{{ row.time }}</strong>
           </template>
 
-          <!-- <template slot-scope="{ row, index }" slot="action">
-              <Button type="primary" style="margin-right: 5px" @click="show(row)">View</Button>
-              <Button type="primary" style="margin-right: 5px" @click="edit(row)">Edit</Button>
-              <Button type="primary" @click="remove(row)">Delete</Button>
-          </template> -->
-            <template v-slot:action='{row}'>
-              <Button type="primary" style="margin-right: 5px" @click="show(row)">View</Button>
-              <Button type="primary" style="margin-right: 5px" @click="edit(row)">Edit</Button>
-              <Button type="primary" @click="remove(row)">Delete</Button>
+          <template v-slot:action='{row}'>
+            <Button type="primary" style="margin-right: 5px" @click="show(row)">View</Button>
+            <Button type="primary" style="margin-right: 5px" @click="edit(row)">Edit</Button>
+            <Button type="primary" @click="remove(row)">Delete</Button>
           </template>
         </Table>
       </div>
@@ -50,17 +42,11 @@ export default {
         }
       ],
       datas: [
-        // {
-        //   id: 1,
-        //   time: '2016-10-02',
-        //   todothing: '吃饭'
-        // }
       ]
     }
   },
   methods: {
     getData () {
-      // 显示todolist
       getTodoList().then(res => {
         console.log('请求成功', res)
         var todos = res.data
@@ -82,20 +68,9 @@ export default {
       })
       console.log('this.$Modal.info = ', this.$Modal.info)
     },
-    // edit (row) {
-    //   var itemId = row.id
-    //   sessionStorage.setItem('showInEdit', JSON.stringify(row))
-    //   this.$router.push({
-    //     name: 'edit_todo',
-    //     params: {
-    //       id: itemId
-    //     }
-    //   })
-    // },
-
     edit (row) {
       this.$router.push({
-        name: 'edit_todo',
+        name: 'createlist',
         params: {
           item: row
         }
@@ -107,11 +82,11 @@ export default {
         // 删除以后重新获取新的列表
         this.getData()
       })
-    },
-    createTodo () {
-      console.log('跳转createlist界面')
-      this.$router.push('createlist')
     }
+    // createTodo () {
+    //   console.log('跳转createlist界面')
+    //   this.$router.push('createlist')
+    // }
   },
   mounted: function () {
     this.init()

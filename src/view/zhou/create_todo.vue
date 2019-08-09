@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>creactTodo</h1>
+      <h1>creact & edit Todo</h1>
       <div>
         <template>
         <Form>
@@ -44,6 +44,10 @@ export default {
     'add': AddPop
   },
   methods: {
+    showTodo () {
+      this.formItem = this.$route.params.item
+      console.log(this.formItem)
+    },
     clickconfirm () {
       // 弹窗的显示和取消，
       this.modalstatus = !this.modalstatus
@@ -52,6 +56,9 @@ export default {
       // 说明可以拿到子组件，没有打印是因为没有触发打印的事件
       console.log('组件', AddPop)
     }
+  },
+  mounted () {
+    this.showTodo()
   }
 }
 </script>
