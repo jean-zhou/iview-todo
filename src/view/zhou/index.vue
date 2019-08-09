@@ -92,6 +92,7 @@ export default {
     //     }
     //   })
     // },
+
     edit (row) {
       this.$router.push({
         name: 'edit_todo',
@@ -102,10 +103,7 @@ export default {
     },
     remove (row) {
       var itemId = row.id
-      console.log('itemId', itemId)
-      console.log('路由参数', this)
       deleteTodo(itemId).then(res => {
-        console.log('delete 成功')
         // 删除以后重新获取新的列表
         this.getData()
       })

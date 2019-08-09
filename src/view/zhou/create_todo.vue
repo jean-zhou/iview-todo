@@ -16,39 +16,41 @@
       </template>
       </div>
       <div>
-        <Button type="primary" @click="todoback">创建</Button>
+        <Button type="primary" @click="clickconfirm">创建
+        </Button>
+        <!-- 父组件传给子组件的值，直接使用data里面数据的名称‘formItem’表示，不需要this.formItem -->
+        <add  :modaldata='formItem' :modalstatus='modalstatus'></add>
       </div>
     </div>
 </template>
 
 <script>
-import { saveTodo } from '@/api'
+// import 引入的内容不能添加大括号，错误语法，会导致引入内容无法识别
+import AddPop from './add'
+
 export default {
   data () {
     return {
+      modalstatus: false,
       formItem: {
         time: '',
         todothing: ''
       }
     }
   },
+  components: {
+    // 定义的子组件需要挂载在父组件上，把子组件重新在父组件中引用
+    // 对于组件的名字，一定要使用字符串，使用字符串一定要用引号包裹
+    'add': AddPop
+  },
   methods: {
-    todoback () {
-      var todo = JSON.stringify(this.formItem)
-      console.log('todo', todo)
-      saveTodo(todo).then(res => {
-        console.log('请求成功, res', res.data)
-        this.$Modal.info({
-          title: '处理结果',
-          content: `
-          ${res.data.message}
-          `
-        })
-        console.log('返回todolist')
-        this.$router.push({
-          name: 'todolist'
-        })
-      })
+    clickconfirm () {
+      // 弹窗的显示和取消，
+      this.modalstatus = !this.modalstatus
+      // console.log('modalstatus', modalstatus)
+      console.log('点击按键', this.modalstatus)
+      // 说明可以拿到子组件，没有打印是因为没有触发打印的事件
+      console.log('组件', AddPop)
     }
   }
 }
